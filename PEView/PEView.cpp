@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <string>
 using namespace std ;
+// C:\\Users\\admin\\Documents\\Tencent Files\\2217991646\\FileRecv\\notepad.exe
 //#define FilePath1  "C:\\Windows\\System32\\notepad.exe"
 //#define FilePath2  "C:\\Users\\admin\\source\\repos\\DLLTest\\Debug\\DLLTest.exe"
 //#define FilePath4  "C:\\Windows\\System32\\calc.exe"
@@ -107,7 +108,7 @@ void zzNTHeader()
     PIMAGE_DOS_HEADER l_pFileDos;//DOS头结构体指针  
     PIMAGE_FILE_HEADER l_pNTHeader;//NT 头结构体指针
     l_pFileDos = (PIMAGE_DOS_HEADER)(g_BaseAddress);
-    BYTE  l_NTNTheaderAdd = l_pFileDos->e_lfanew;//获取NT的基地址
+    DWORD l_NTNTheaderAdd = l_pFileDos->e_lfanew;//获取NT的基地址
 
     l_pNTHeader = (PIMAGE_FILE_HEADER)((BYTE *)g_BaseAddress+ l_NTNTheaderAdd+4);
     cout << "----------------------IMAGE_FILE_HEADER-----------------" << endl;
@@ -129,7 +130,7 @@ void  zzOptionalHeader()
 
     PIMAGE_DOS_HEADER l_pFileDos;//DOS头结构体指针  
     l_pFileDos = (PIMAGE_DOS_HEADER)(g_BaseAddress);
-    BYTE  l_NTNTheaderAdd = l_pFileDos->e_lfanew;//获取NT的基地址
+    DWORD  l_NTNTheaderAdd = l_pFileDos->e_lfanew;//获取NT的基地址
 
     l_pOptionalHeader = (PIMAGE_OPTIONAL_HEADER)((PBYTE)g_BaseAddress + l_NTNTheaderAdd+0x18);
     cout <<"--------------------IMAGE_OPTIONAL_HEADER---------------"<<endl;
@@ -158,7 +159,7 @@ int zzRvaToRaw(int RVA)
     int l_NumberOfSections = NULL;
     PIMAGE_DOS_HEADER l_pFileDos;//DOS头结构体指针  
     PIMAGE_FILE_HEADER l_pNTHeader;//NT 头结构体指针
-    BYTE  l_NTNTheaderAdd;
+    DWORD  l_NTNTheaderAdd;
     pMySections l_pSection;
 
     l_pFileDos = (PIMAGE_DOS_HEADER)(g_BaseAddress);
@@ -197,7 +198,7 @@ void zzImportDirectoryTable()
 {
     PIMAGE_OPTIONAL_HEADER l_pOptionalHeader;//可选头结构体指针
     PIMAGE_DATA_DIRECTORY  l_PDateDirectory;//date结构体指针
-    BYTE  l_NTNTheaderAdd;
+    DWORD  l_NTNTheaderAdd;
     PIMAGE_DOS_HEADER l_pFileDos;//DOS头结构体指针
     PIMAGE_IMPORT_DESCRIPTOR l_PImportDescriptor;
     int l_importTableRva;
@@ -239,7 +240,7 @@ void zzImportAddressTable()
 {
     PIMAGE_OPTIONAL_HEADER l_pOptionalHeader;//可选头结构体指针
     PIMAGE_DATA_DIRECTORY  l_PDateDirectory;//date结构体指针
-    BYTE  l_NTNTheaderAdd;
+    DWORD l_NTNTheaderAdd;
     PIMAGE_DOS_HEADER l_pFileDos;//DOS头结构体指针
     PIMAGE_IMPORT_DESCRIPTOR l_PImportDescriptor;
     int l_importTableRva;
@@ -295,7 +296,7 @@ void zzExportDirectory()
 {
     PIMAGE_OPTIONAL_HEADER l_pOptionalHeader;//可选头结构体指针
     PIMAGE_EXPORT_DIRECTORY l_pExportDirectory;//导出表结构体指针
-    BYTE  l_NTNTheaderAdd;
+    DWORD  l_NTNTheaderAdd;
     PIMAGE_DOS_HEADER l_pFileDos;//DOS头结构体指针
     PIMAGE_IMPORT_DESCRIPTOR l_PImportDescriptor;
     int l_ExportDirectory;
@@ -349,7 +350,7 @@ void zzBaeRelocationTable()
 {
     PIMAGE_OPTIONAL_HEADER l_pOptionalHeader;//可选头结构体指针
     PIMAGE_EXPORT_DIRECTORY l_pExportDirectory;//导出表结构体指针
-    BYTE  l_NTNTheaderAdd;
+    DWORD  l_NTNTheaderAdd;
     PIMAGE_DOS_HEADER l_pFileDos;//DOS头结构体指针
     PIMAGE_IMPORT_DESCRIPTOR l_PImportDescriptor;
     PIMAGE_BASE_RELOCATION  l_pBaeRelocation;//重定位表结构体指针
@@ -393,12 +394,6 @@ void zzBaeRelocationTable()
 
 
 }
-
-
-
-
-
-
 
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
