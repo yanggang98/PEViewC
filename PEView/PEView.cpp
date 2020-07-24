@@ -29,9 +29,10 @@ void  zzBaeRelocationTable();//重定位表
 int main()
 {
     string str;
-    cout << "输入PE文件路径:";
-    getline(cin, str);
     char Filepath[256];//最大路径长度256个字节
+    int index;
+    cout << "输入PE文件路径:";
+    getline(cin, str);    
     strcpy_s(Filepath,str.c_str());
     // cout <<Filepath;
     //打开文件失败
@@ -39,13 +40,40 @@ int main()
     {
         return 0;
     };
-    zzDosHead();
-    zzNTHeader();
-    zzOptionalHeader();
-    zzImportDirectoryTable();
-    zzImportAddressTable();
-    zzExportDirectory();
-    zzBaeRelocationTable();
+
+    cout << "选择打印信息 1.DOS头 2.FILE HEADER 3.可选头 4.DirectoryTable 5.IAT 6.导出信息 7.基址重定位表  " << endl;
+    cout << "选择:";
+
+    cin >> index;
+
+    switch (index)
+    {
+    case 1:
+        zzDosHead();
+        break;
+    case 2:
+        zzNTHeader();
+        break;
+    case 3:
+        zzOptionalHeader();
+        break;
+    case 4:
+        zzImportDirectoryTable();
+        break;
+    case 5:
+        zzImportAddressTable();
+        break;
+    case 6:
+        zzExportDirectory();
+        break;
+    case 7:
+        zzBaeRelocationTable();
+        break;
+    default:
+        cout << "选择错误";
+        break;
+    }
+    return 0;
 }
 
 BOOL zzGetfile( CHAR * Filepath)
@@ -124,7 +152,7 @@ void zzNTHeader()
 //可选头
 void  zzOptionalHeader()
 {
-  
+
     PIMAGE_OPTIONAL_HEADER l_pOptionalHeader;//可选头结构体指针
     PIMAGE_DATA_DIRECTORY  l_PDateDirectory;//date结构体指针
 
